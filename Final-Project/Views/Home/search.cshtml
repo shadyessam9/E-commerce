@@ -1,0 +1,145 @@
+﻿@model List<Ad>
+@{
+    ViewData["Title"] = "search";
+}
+
+
+<div class="main">
+    <div class="container d-flex justify-content-center ">
+        <table class="table caption-top">
+  
+  <thead>
+    <tr>
+      <th scope="col-4" class="col-4">Ads</th>
+      <th scope="col-6" class="col-5"></th>
+@*      <th scope="col-4" class="col-3"></th>
+*@      
+    </tr>
+  </thead>
+  <tbody>
+      @foreach (var item in Model){
+    <tr>
+     
+      <td>
+         <a asp-controller="ads" asp-action="index" asp-route-AdId="@item.AdId">
+             <img src="@item.AdMainImage" style="height:150px;width:150px" />
+                            </a>
+</td>
+      <td><a>
+          <div class="mx-2 title"><a  asp-controller="ads" asp-action="index" asp-route-AdId="@item.AdId" >@item.AdTitle</a></div>
+          <p class="mx-2 title">   @item.AdBrief</p>
+          <p class="mx-2 title">@item.AdPrice</p>
+      </a></td>
+@*      <td><a href="#" class="btn-product btn-wishlist" title="Wishlist"><span>Add to Wishlist</span></a></td>
+*@    </tr>
+      }
+  </tbody>
+</table>
+
+   
+
+    </div><!---------end container-->
+    
+<div class="col-md-12">
+    <nav aria-label="Page navigation">
+        <ul class="pagination d-flex flex-wrap justify-content-center">
+            @{
+                string prevState = "disabled";
+                string nextState = "disabled";
+                if (ViewBag.currentPage > 1)
+                {
+                    prevState = "active";
+                }
+
+                if (ViewBag.currentPage < ViewBag.Allpages)
+                {
+                    nextState = "active";
+                }
+            }
+
+            @*PREV BUTTON !!!!!!!!!!!!!!!!!!*@
+            @*PREV BUTTON !!!!!!!!!!!!!!!!!!*@
+            @*PREV BUTTON !!!!!!!!!!!!!!!!!!*@
+          
+
+                <li class="page-item @prevState ">
+                    <a class="page-link page-link-prev"
+                   aria-label="Previous"
+                   tabindex="-1"
+                   aria-disabled="true"
+                   asp-controller="home"
+                   asp-action="search"
+                      asp-route-str="@ViewBag.str"
+ asp-route-page="@(ViewBag.currentPage-1)">
+                        <span aria-hidden="true"><i class="icon-long-arrow-left"></i></span>Prev
+                    </a>
+                </li>
+
+          
+
+            @if (ViewBag.Allpages != null)
+            {
+
+                @for (var i = 1; i <= ViewBag.Allpages; i++)
+                {
+                  
+
+                        if (i == @ViewBag.currentPage)
+                        {
+
+
+                            <li class="page-item active" aria-current="page">
+                                <a class="page-link"
+                  asp-controller="home"
+                   asp-action="search"
+                    asp-route-str="@ViewBag.str"
+  asp-route-page="@i">@i</a>
+                            </li>
+                        }
+
+                        else
+                        {
+                            <li class="page-item" aria-current="page">
+                                <a class="page-link"
+                  asp-controller="home"
+                   asp-action="search"
+                     asp-route-str="@ViewBag.str"
+ asp-route-page="@i">@i</a>
+                            </li>
+                        }
+                    }
+             
+
+
+
+            }
+            <li class="page-item-total">of @ViewBag.Allpages</li>
+
+
+
+
+
+
+
+            @*NEXT BUTTON!!!!!!!!!!!!!!!!!!!!!!!*@
+            @*NEXT BUTTON!!!!!!!!!!!!!!!!!!!!!!!*@
+           
+                <li class="page-item @nextState">
+                    <a class="page-link page-link-next" aria-label="Next"
+                   asp-controller="home"
+                   asp-action="search"
+    asp-route-str="@ViewBag.str"
+asp-route-page="@(ViewBag.currentPage+1)">
+                        Next <span aria-hidden="true"><i class="icon-long-arrow-right"></i></span>
+                    </a>
+                </li>
+
+          
+           
+
+        </ul>
+    </nav>  <!-- ad list page navigation -->
+</div>
+
+</div><!---------end main-->
+ <button id="scroll-top" title="Back to Top"><i class="icon-arrow-up"></i></button>
